@@ -1,10 +1,10 @@
 import PageDefault from '../src/components/PageDefault'
 
-export default function Home() {
+export default function About() {
   return (
     <>
       <PageDefault>
-        Home
+        About
       </PageDefault>
     </>
   )

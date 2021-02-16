@@ -10,7 +10,7 @@ const FooterBase = styled.footer`
     text-align: center;
     width: 100%;
     @media screen and (min-width: 768px){
-        padding: .25rem;
+        padding: 2rem;
         font-size: 1rem;
     }
 `;

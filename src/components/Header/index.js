@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
+import { useRouter } from 'next/router';
 
 const HeaderBase = styled.header`
     align-items: center;
@@ -117,16 +118,33 @@ HeaderBase.Link = styled.a`
 `;
 
 export default function Header() {
+    const router = useRouter();
+    const [name, setName] = useState('');
     return (
         <HeaderBase>
             <HeaderBase.Nav>
-                <HeaderBase.Link>
+                <HeaderBase.Link onClick={(event) => {
+                    event.preventDefault();
+                    router.push(`/`)
+                }}>
                     Home
                 </HeaderBase.Link>
-                <HeaderBase.Link>
+                <HeaderBase.Link onClick={(event) => {
+                    event.preventDefault();
+                    router.push(`/pokemons`)
+                }}>
+                    Pokemóns
+                </HeaderBase.Link>
+                <HeaderBase.Link onClick={(event) => {
+                    event.preventDefault();
+                    router.push(`/about`)
+                }}>
                     About
                 </HeaderBase.Link>
-                <HeaderBase.Link>
+                <HeaderBase.Link onClick={(event) => {
+                    event.preventDefault();
+                    router.push(`/contact`)
+                }}>
                     Contact
                 </HeaderBase.Link>
             </HeaderBase.Nav>
@@ -134,8 +152,17 @@ export default function Header() {
                 <HeaderBase.Image src='https://fontmeme.com/permalink/210216/84f1943cbd05e36bb90d12663346a34b.png' />
             </HeaderBase.Logo>
             <HeaderBase.Search>
-                <HeaderBase.Input type="text" placeholder="Search..." />
-                <HeaderBase.Button>
+                <HeaderBase.Input
+                    type="text"
+                    placeholder="Search a pokémon..." onChange={(event) => {
+                        setName(event.target.value);
+                    }}
+                    name="name"
+                    value={name} />
+                <HeaderBase.Button onClick={(event) => {
+                    event.preventDefault();
+                    router.push(`/pokemons?name=${name}`)
+                }}>
                     X
                 </HeaderBase.Button>
             </HeaderBase.Search>
