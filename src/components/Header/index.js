@@ -14,6 +14,8 @@ const HeaderBase = styled.header`
     @media screen and (min-width: 768px){
         flex-direction: row;
         padding: .25rem;
+        position: sticky;
+        top: 0;
     }
 `;
 
@@ -107,13 +109,21 @@ HeaderBase.Link = styled.a`
     text-decoration: none;
     width: 100%;
     &:hover{
+        cursor: pointer;
         background-color: ${({ theme }) => theme.colors.secondaryDark};
     }
     @media screen and (min-width: 768px){
         flex-direction: row;
         font-size: 1rem;
         justify-content: space-between;
+        padding: .5em;
         width: auto;
+    }
+    @media screen and (min-width: 1024px){
+        padding: 1em;
+    }
+    @media screen and (min-width: 1349px){
+        padding: 1.5em;
     }
 `;
 
@@ -154,8 +164,15 @@ export default function Header() {
             <HeaderBase.Search>
                 <HeaderBase.Input
                     type="text"
-                    placeholder="Search a pokémon..." onChange={(event) => {
+                    placeholder="Search pokémons..."
+                    onChange={(event) => {
                         setName(event.target.value);
+                    }}
+                    onKeyDown={(event) => {
+                        var tecla = event.keyCode;
+                        if (tecla == 13) {
+                            router.push(`/pokemons?name=${name}`)
+                        }
                     }}
                     name="name"
                     value={name} />
