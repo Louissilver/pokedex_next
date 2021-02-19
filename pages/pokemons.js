@@ -11,10 +11,10 @@ export default function Pokemons() {
     const [pokemons, setPokemons] = useState([]);
     const [modalVisible, setModalVisible] = useState(false);
     const [index, setIndex] = useState(null);
+  
 
     const router = useRouter();
     const { name } = router.query;
-    console.log(name)
 
     useEffect(() => {
         ListarPokemons()
@@ -34,8 +34,12 @@ export default function Pokemons() {
                         <Loading.Container>
                             <Loading />
                         </Loading.Container>}
+                    {JSON.stringify(pokemons).includes(name) === false &&
+                        <Loading.Container>
+                            Pokémon não encontrado, tente de novo.
+                        </Loading.Container>}
                     {pokemons.map((pokemon) => {
-                        if (pokemon.pokemon_species.name.includes(name) || name == "" || name==undefined) {
+                        if (pokemon.pokemon_species.name.includes(name) || name == "" || name == undefined) {
                             return (
 
                                 <Card key={pokemon.entry_number} onClick={() => {

@@ -145,18 +145,6 @@ export default function Header() {
                 }}>
                     Pokemóns
                 </HeaderBase.Link>
-                <HeaderBase.Link onClick={(event) => {
-                    event.preventDefault();
-                    router.push(`/about`)
-                }}>
-                    About
-                </HeaderBase.Link>
-                <HeaderBase.Link onClick={(event) => {
-                    event.preventDefault();
-                    router.push(`/contact`)
-                }}>
-                    Contact
-                </HeaderBase.Link>
             </HeaderBase.Nav>
             <HeaderBase.Logo href="#">
                 <HeaderBase.Image src='https://fontmeme.com/permalink/210216/84f1943cbd05e36bb90d12663346a34b.png' />

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { DetalharPokemon } from '../../repositories/pokemon'
-import Loading from '../Loading'
 
 const ModalBase = styled.div`
     width: 100%;
@@ -64,7 +63,7 @@ ModalBase.Close = styled.button`
 `;
 
 ModalBase.Content = styled.div`
-overflow:auto;
+    overflow:auto;
     display: flex;
     justify-content: start;
     height: 100%;
@@ -121,55 +120,74 @@ ModalBase.Footer = styled.footer`
 `;
 
 ModalBase.Image = styled.img`
-    width: 50%;
-    object-fit: contain;
-    object-position: center;
-    @media(max-width: 800px) {
-        width: 100%;
+border-bottom: 5px solid ${({ theme }) => theme.colors.secondary};
+width: 100%;
+object-fit: contain;
+object-position: center;
+@media(min-width: 800px) {
+    border-right: 5px solid ${({ theme }) => theme.colors.secondary};
+    border-bottom: none;
+        width: 50%;
     }
 `;
 
 ModalBase.Characteristcs = styled.div`
-    width: 50%;
+    width: 100%;
     display: flex;
     flex-direction: column;
-    font-size: 1.5rem;
+    font-size: 1.25rem;
     align-items: center;
     padding: 5%;
-`;
+    @media screen and (min-width: 768px){
+        justify-content: center;
+        width: 50%;
+    }
+    `;
 
 ModalBase.Infos = styled.ul`
-    padding: 1%;
-    width: 50%;
+    padding: 0;
+    margin: 1rem;
     list-style: none;
     text-align: center;
-    line-height: 2rem;
-    @media(max-width: 800px) {
-        width: 100%;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    @media(min-width: 800px) {
+        width: 50%;
     }
-`;
+    `;
 
 ModalBase.Info = styled.li`
+background-color: ${({ theme }) => theme.colors.primaryDark};
+color: white;
     width: 100%;
+    padding: 5px;
+    margin: 5px auto;
     list-style: none;
-`;
+    border: 1px solid black;
+    border-radius: 4rem;
+    `;
 
 ModalBase.Types = styled.ul`
-    padding: 1%;
-    width: 50%;
+    padding: 0;
+    margin: 1rem;
     list-style: none;
     text-align: center;
-    @media(max-width: 800px) {
-        width: 100%;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    @media(min-width: 800px) {
+        width: 50%;
     }
 `;
 
 ModalBase.Type = styled.li`
+background-color: ${({ theme }) => theme.colors.primaryDark};
+color: white;
     width: 100%;
-    padding: 1rem;
-    margin: 5px;
+    padding: 5px;
+    margin: 5px auto;
     list-style: none;
-    display: inline;
     border: 1px solid black;
     border-radius: 4rem;
 `;
@@ -177,6 +195,7 @@ ModalBase.Type = styled.li`
 export default function Modal({ index, id = "modal", onClose = () => { } }) {
     const [pokemonDetalhado, setPokemonDetalhado] = useState([]);
     const [pokemonTypes, setPokemonTypes] = useState([]);
+    const [type, setType] = useState('');
 
     const handleOutsideClick = (event) => {
         if (event.target.id === id) {
@@ -189,6 +208,7 @@ export default function Modal({ index, id = "modal", onClose = () => { } }) {
             .then((pokemon) => {
                 setPokemonDetalhado(pokemon);
                 setPokemonTypes(pokemon.types)
+                setType(pokemon.types[0].type.name)
             })
             .catch((err) => {
                 console.log(err.message);
@@ -198,7 +218,7 @@ export default function Modal({ index, id = "modal", onClose = () => { } }) {
 
     return (
         <ModalBase id={id} onClick={handleOutsideClick}>
-            <ModalBase.Container>
+            <ModalBase.Container className={`${type}`}>
                 <ModalBase.Header>
                     <ModalBase.Close onClick={onClose} />
                     <h2>{`${pokemonDetalhado.name}`}</h2>
@@ -206,24 +226,24 @@ export default function Modal({ index, id = "modal", onClose = () => { } }) {
                 <ModalBase.Content>
                     <ModalBase.Image src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${index}.png`} />
                     <ModalBase.Characteristcs>
-                    <ModalBase.Types>
-                        {pokemonTypes.map((type) => {
-                        return (
-                            <ModalBase.Type key={type.slot}>
-                                {type.type.name}
-                            </ModalBase.Type>
-                        )
-                    })}
-                    </ModalBase.Types>
+                        <ModalBase.Types>
+                            {pokemonTypes.map((type) => {
+                                return (
+                                    <ModalBase.Type key={type.slot}>
+                                        {type.type.name}
+                                    </ModalBase.Type>
+                                )
+                            })}
+                        </ModalBase.Types>
                         <ModalBase.Infos>
                             <ModalBase.Info>
                                 Number: #{pokemonDetalhado.id}
                             </ModalBase.Info>
                             <ModalBase.Info>
-                                Height: {pokemonDetalhado.height/10} m
+                                Height: {pokemonDetalhado.height / 10} m
                             </ModalBase.Info>
                             <ModalBase.Info>
-                                Weight: {pokemonDetalhado.weight/10} kg
+                                Weight: {pokemonDetalhado.weight / 10} kg
                             </ModalBase.Info>
                         </ModalBase.Infos>
                     </ModalBase.Characteristcs>

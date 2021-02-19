@@ -18,6 +18,7 @@ const Loading = styled.div`
 Loading.Container = styled.div`
     text-align: center; 
     font-size: 2rem;
+    font-family: sans-serif;
     width: 100%;
     height: 70vh;
     display: flex;
