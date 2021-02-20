@@ -32,14 +32,14 @@ export default function Pokemons() {
         <>
             <PageDefault>
                 <Card.Row>
-                    {(pokemons.length === 0 && pokemonStringify.includes(name)) &&
+                    {pokemons.length === 0 &&
                         <Loading.Container>
                             <Loading />
                         </Loading.Container>}
-                    {(!pokemonStringify.toLowerCase().includes(name.toLocaleLowerCase()) && !(name == undefined)) &&
+                    {!(name == undefined) && (!pokemonStringify.toLowerCase().includes(name.toLowerCase())) &&
                         <Loading.Container>
                             Pokémon não encontrado
-                                    </Loading.Container>}
+                        </Loading.Container>}
                     {pokemons.map((pokemon) => {
                         if (name == "" || name == undefined) {
                             return (
