@@ -146,7 +146,10 @@ export default function Header() {
                     Pokemóns
                 </HeaderBase.Link>
             </HeaderBase.Nav>
-            <HeaderBase.Logo href="#">
+            <HeaderBase.Logo href="#" onClick={(event) => {
+                    event.preventDefault();
+                    router.push(`/`)
+                }}>
                 <HeaderBase.Image src='https://fontmeme.com/permalink/210216/84f1943cbd05e36bb90d12663346a34b.png' />
             </HeaderBase.Logo>
             <HeaderBase.Search>
@@ -168,7 +171,6 @@ export default function Header() {
                     event.preventDefault();
                     router.push(`/pokemons?name=${name}`)
                 }}>
-                    X
                 </HeaderBase.Button>
             </HeaderBase.Search>
         </HeaderBase>

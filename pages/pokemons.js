@@ -11,7 +11,8 @@ export default function Pokemons() {
     const [pokemons, setPokemons] = useState([]);
     const [modalVisible, setModalVisible] = useState(false);
     const [index, setIndex] = useState(null);
-  
+    const [pokemonStringify, setPokemonStringify] = useState('');
+
 
     const router = useRouter();
     const { name } = router.query;
@@ -20,6 +21,7 @@ export default function Pokemons() {
         ListarPokemons()
             .then((pokemons) => {
                 setPokemons(pokemons);
+                setPokemonStringify(JSON.stringify(pokemons));
             })
             .catch((err) => {
                 console.log(err.message);
@@ -30,16 +32,32 @@ export default function Pokemons() {
         <>
             <PageDefault>
                 <Card.Row>
-                    {pokemons.length === 0 &&
+                    {(pokemons.length === 0 && pokemonStringify.includes(name)) &&
                         <Loading.Container>
                             <Loading />
                         </Loading.Container>}
-                    {JSON.stringify(pokemons).includes(name) === false &&
+                    {(!pokemonStringify.includes(name) && !(name == undefined)) &&
                         <Loading.Container>
-                            Pokémon não encontrado, tente de novo.
-                        </Loading.Container>}
+                            Pokémon não encontrado
+                                    </Loading.Container>}
                     {pokemons.map((pokemon) => {
-                        if (pokemon.pokemon_species.name.includes(name) || name == "" || name == undefined) {
+                        if (name == "" || name == undefined) {
+                            return (
+                                <Card key={pokemon.entry_number} onClick={() => {
+                                    setModalVisible(true)
+                                    setIndex(pokemon.entry_number)
+                                }}>
+                                    <Card.Image src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.entry_number}.png`} />
+                                    <Card.Number>#{pokemon.entry_number}</Card.Number>
+                                    <Card.Pokemon>{`${Capitalize(pokemon.pokemon_species.name)}`}</Card.Pokemon>
+                                    <Card.Button onClick={() => {
+                                        setModalVisible(true)
+                                        setIndex(pokemon.entry_number)
+                                        console.log(pokemon.entry_number)
+                                    }}>Ver mais</Card.Button>
+                                </Card>
+                            )
+                        } else if (pokemon.pokemon_species.name.toUpperCase().includes(name.toUpperCase())) {
                             return (
 
                                 <Card key={pokemon.entry_number} onClick={() => {
