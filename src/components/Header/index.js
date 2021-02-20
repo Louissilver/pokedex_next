@@ -52,6 +52,7 @@ HeaderBase.Button = styled.button`
     background-color: ${({ theme }) => theme.colors.primary};
     color: ${({ theme }) => theme.colors.secondary};
     font-size: 1.5rem;
+    font-weight: bold;
     padding: .5rem;
     width: 25%;
     &:hover{
@@ -170,7 +171,7 @@ export default function Header() {
                 <HeaderBase.Button onClick={(event) => {
                     event.preventDefault();
                     router.push(`/pokemons?name=${name}`)
-                }}>
+                }}> GO
                 </HeaderBase.Button>
             </HeaderBase.Search>
         </HeaderBase>

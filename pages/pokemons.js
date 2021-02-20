@@ -36,7 +36,7 @@ export default function Pokemons() {
                         <Loading.Container>
                             <Loading />
                         </Loading.Container>}
-                    {(!pokemonStringify.includes(name) && !(name == undefined)) &&
+                    {(!pokemonStringify.toLowerCase().includes(name.toLocaleLowerCase()) && !(name == undefined)) &&
                         <Loading.Container>
                             Pokémon não encontrado
                                     </Loading.Container>}
